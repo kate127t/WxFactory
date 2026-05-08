@@ -344,9 +344,10 @@ def entropy(Q: NDArray,geom:Cartesian2D)-> NDArray[numpy.float64]:
     "Computes physical entropy s = log(p / rho**gamma)"
     xp = geom.device.xp
     
-    ρ, _, _, ρ_θ, _ , _, _ = conservative_to_prim(Q)
+    ρ, ρ_uu, ρ_ww, ρ_θ, uu , ww, _ = conservative_to_prim(Q)
     
     ρ_E = ρ_θ
+    gamma = cpd/cvd
     # pressure in terms of total energy
     p =  (gamma-1) * (ρ_E - 0.5 * (ρ_uu*uu + ρ_ww*ww))
     

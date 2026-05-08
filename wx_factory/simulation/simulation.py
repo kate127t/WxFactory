@@ -42,7 +42,7 @@ from rhs.rhs_selector import RhsBundle
 from wx_mpi import SingleProcess, Conditional
 from post_proccessing import PostProcessor, ScharMountainPostProcessor
 # from init.entropy_vars import entropy, entropy_function
-from init.entropy_vars import entropy, entropy_function
+from init.entropy_vars_energy import entropy, entropy_function
 
 
 class Simulation:
