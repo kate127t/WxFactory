@@ -333,6 +333,8 @@ def initialize_cartesian2d(geom: Cartesian2D, param: Configuration) -> NDArray[n
         ww = 0
         p = 10
         
+        gamma = cpd/cvd
+        
         # Energy notation. Note Here θ denotes total enegy E
         θ = p/(ρ*(gamma-1)) + 0.5 * (uu**2 + ww**2)
         
@@ -351,6 +353,8 @@ def initialize_cartesian2d(geom: Cartesian2D, param: Configuration) -> NDArray[n
         uu = 0.1
         ww = 0.2
         p = 10
+        
+        gamma = cpd/cvd
         
         # Energy notation. Note Here θ denotes total enegy E
         θ = p/(ρ*(gamma-1)) + 0.5 * (uu**2 + ww**2)
@@ -383,6 +387,8 @@ def initialize_cartesian2d(geom: Cartesian2D, param: Configuration) -> NDArray[n
         ρ[q2], uu[q2], ww[q2], p[q2] = 1.0,    0.7276, 0.0,    1.0
         ρ[q3], uu[q3], ww[q3], p[q3] = 0.8,    0.0,    0.0,    1.0
         ρ[q4], uu[q4], ww[q4], p[q4] = 1.0,    0.0,    0.7276, 1.0
+        
+        gamma = cpd/cvd
         
         # Energy notation. Note Here θ denotes total enegy E
         θ = p/(ρ*(gamma-1)) + 0.5 * (uu**2 + ww**2)

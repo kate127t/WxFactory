@@ -8,7 +8,8 @@ from common import Configuration
 from geometry import DFROperators, Geometry, Metric2D, Metric3DTopo
 from pde import PDE
 from process_topology import ProcessTopology, ExchangeRequest
-from init.entropy_vars import conservative_to_entropy, du_dv, entropy_to_conservative
+# from init.entropy_vars import conservative_to_entropy, du_dv, entropy_to_conservative
+from init.entropy_vars_energy import conservative_to_entropy, du_dv, entropy_to_conservative
 
 
 class RHS(ABC):

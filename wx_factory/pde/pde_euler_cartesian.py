@@ -3,7 +3,9 @@ from numpy.typing import NDArray
 from .pde import PDE
 from common.definitions import idx_2d_rho, idx_2d_rho_u, idx_2d_rho_w, gravity
 from geometry import Cartesian2D
-from init.entropy_vars import conservative_to_entropy
+# from init.entropy_vars import conservative_to_entropy
+from init.entropy_vars_energy import conservative_to_entropy
+
 
 
 class PDEEulerCartesian(PDE):
