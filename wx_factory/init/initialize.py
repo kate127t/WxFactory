@@ -332,10 +332,17 @@ def initialize_cartesian2d(geom: Cartesian2D, param: Configuration) -> NDArray[n
         uu = 0.1
         ww = 0
         p = 10
-        θ = p/(Rd*ρ)
-        T = p / (Rd * ρ)
-        exner = (p / p0) ** (Rd / cpd)
-        θ = T / exner
+        
+        gamma = cpd/cvd
+        
+        # Energy notation. Note Here θ denotes total enegy E
+        θ = p/(ρ*(gamma-1)) + 0.5 * (uu**2 + ww**2)
+        
+        # Potential temperature notation:
+        # θ = p/(Rd*ρ)
+        # T = p / (Rd * ρ)
+        # exner = (p / p0) ** (Rd / cpd)
+        # θ = T / exner
     
     elif param.case_number == 101:
         geom.xperiodic = True
@@ -346,10 +353,16 @@ def initialize_cartesian2d(geom: Cartesian2D, param: Configuration) -> NDArray[n
         uu = 0.1
         ww = 0.2
         p = 10
-        θ = p/(Rd*ρ)
-        T = p / (Rd * ρ)
-        exner = (p / p0) ** (Rd / cpd)
-        θ = T / exner
+        
+        gamma = cpd/cvd
+        
+        # Energy notation. Note Here θ denotes total enegy E
+        θ = p/(ρ*(gamma-1)) + 0.5 * (uu**2 + ww**2)
+        
+        # θ = p/(Rd*ρ)
+        # T = p / (Rd * ρ)
+        # exner = (p / p0) ** (Rd / cpd)
+        # θ = T / exner
         
     elif param.case_number == 102:
         geom.xperiodic = True
@@ -375,10 +388,15 @@ def initialize_cartesian2d(geom: Cartesian2D, param: Configuration) -> NDArray[n
         ρ[q3], uu[q3], ww[q3], p[q3] = 0.8,    0.0,    0.0,    1.0
         ρ[q4], uu[q4], ww[q4], p[q4] = 1.0,    0.0,    0.7276, 1.0
         
-        θ = p/(Rd*ρ)
-        T = p / (Rd * ρ)
-        exner = (p / p0) ** (Rd / cpd)
-        θ = T / exner
+        gamma = cpd/cvd
+        
+        # Energy notation. Note Here θ denotes total enegy E
+        θ = p/(ρ*(gamma-1)) + 0.5 * (uu**2 + ww**2)
+        
+        # θ = p/(Rd*ρ)
+        # T = p / (Rd * ρ)
+        # exner = (p / p0) ** (Rd / cpd)
+        # θ = T / exner
 
     if param.case_number == 0:
         N_star = 0.01

@@ -4,8 +4,10 @@ from numpy.typing import NDArray
 from common.definitions import idx_rho, idx_rho_u1, idx_rho_u2, idx_rho_w, idx_rho_theta
 from rhs.rhs import RHS
 from wx_mpi import SingleProcess, Conditional
-from init.entropy_vars import conservative_to_entropy, du_dv,\
-    entropy_potential, entropy_to_conservative, jacobian_complex_field, jacobian_fd_field, dρE_dρθ
+# from init.entropy_vars import conservative_to_entropy, du_dv,\
+#     entropy_potential, entropy_to_conservative, jacobian_complex_field, jacobian_fd_field, dρE_dρθ
+from init.entropy_vars_energy import conservative_to_entropy, du_dv,\
+    entropy_potential, entropy_to_conservative, jacobian_complex_field, jacobian_fd_field
 from common.graphx import image_field
 
 
