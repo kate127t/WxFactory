@@ -331,6 +331,9 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
 
         K1dv1_dx1 = xp.einsum('abijk,bijk->aijk', self.K1, self.dv_dx1)
         K2dv1_dx1 = xp.einsum('abijk,bijk->aijk', self.K2, self.dv_dx1)
+        
+        print("Kdv1_dx1",Kdv1_dx1[:,self.i1,self.j1,:])
+        print("dq_dx1",dq_dx1[:,self.i1,self.j1,:])
 
         # Volume terms
         vol_int1 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(Kdv1_dx1 , self.dv_dx1))
@@ -389,8 +392,8 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         self.K1 = jacobian_complex_field(entropy_to_conservative,self.v,self.geom,self.config)
         self.K2 = jacobian_fd_field(entropy_to_conservative,self.v,self.geom,self.config)
 
-        # print("K1[:,i1,j1,0]\n",self.K1[:,:,self.i1,self.j1,0])
-        # print("K[:,i1,j1,0]\n",self.K[:,:,self.i1,self.j1,0])
+        print("K1[:,i1,j1,0]\n",self.K1[:,:,self.i1,self.j1,0])
+        print("K[:,i1,j1,0]\n",self.K[:,:,self.i1,self.j1,0])
 
     def viscous_flux_divergence_partial(self) -> None:
         """Part of the divergence for g - discontinuous part, no boundary terms"""

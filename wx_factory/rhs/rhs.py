@@ -108,7 +108,7 @@ class RHS(ABC):
 
     def __call__(self, q: NDArray) -> NDArray:
         xp = self.device.xp
-        print("\n -------------------------------------------------------------------------------------\n")
+        # print("\n -------------------------------------------------------------------------------------\n")
         # self.i = 2
         # self.j = 39
         self.i1 = 0
@@ -118,13 +118,13 @@ class RHS(ABC):
         self.atol = 1e-12
         
         self.q = q
-        # print("\nq\n",xp.min(q),"\n",xp.max(q))
-        print("\nq\n",q[:,self.i1,self.j1,:])
-        print(f"q [{1},{38}] = q [{2},{38}]: ", xp.all(q[:,self.i1, self.j1,:] == q[:,self.i2, self.j2,:]))
-        print(f"q [{self.i1},{self.j1}] = q [{self.i2},{self.j2}]: ", xp.all(q[:,self.i1, self.j1,:] == q[:,self.i2, self.j2,:]))
+        # # print("\nq\n",xp.min(q),"\n",xp.max(q))
+        # print("\nq\n",q[:,self.i1,self.j1,:])
+        # print(f"q [{1},{38}] = q [{2},{38}]: ", xp.all(q[:,self.i1, self.j1,:] == q[:,self.i2, self.j2,:]))
+        # print(f"q [{self.i1},{self.j1}] = q [{self.i2},{self.j2}]: ", xp.all(q[:,self.i1, self.j1,:] == q[:,self.i2, self.j2,:]))
         
-        print(f"q [{1},{38}] approx q [{2},{38}]: ", xp.allclose(q[:,self.i1, self.i1,:] , q[:,self.i2, self.j2,:],rtol=0,atol=self.atol))
-        print(f"q [{self.i1},{self.j1}] approx q [{self.i2},{self.j2}]: ", xp.allclose(q[:,self.i1, self.j1,:],q[:,self.i2, self.j2,:],rtol=0,atol=self.atol))
+        # print(f"q [{1},{38}] approx q [{2},{38}]: ", xp.allclose(q[:,self.i1, self.i1,:] , q[:,self.i2, self.j2,:],rtol=0,atol=self.atol))
+        # print(f"q [{self.i1},{self.j1}] approx q [{self.i2},{self.j2}]: ", xp.allclose(q[:,self.i1, self.j1,:],q[:,self.i2, self.j2,:],rtol=0,atol=self.atol))
         
         # 0.a Process timing
         if len(self.timestamps) > 0:  # Process timing from previous steps
@@ -184,9 +184,9 @@ class RHS(ABC):
         
         # # 7.0 Compute entropy variables from solution variables
         # # TODO: check if config is right
-        print("q atol: ",xp.max(xp.abs(q[:,self.i1, self.j1,:] - q[:,self.i2, self.j2,:])))
+        # print("q atol: ",xp.max(xp.abs(q[:,self.i1, self.j1,:] - q[:,self.i2, self.j2,:])))
         self.v = conservative_to_entropy(q,self.geom,self.config)
-        print("v atol: ",xp.max(xp.abs(self.v[:,self.i1, self.j1,:] - self.v[:,self.i2, self.j2,:])))
+        # print("v atol: ",xp.max(xp.abs(self.v[:,self.i1, self.j1,:] - self.v[:,self.i2, self.j2,:])))
         
         # 7.1 Extrapolate the entropy variables to the boundaries of the element
         self.solution_extrapolation_entropy(self.v)
