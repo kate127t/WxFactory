@@ -113,14 +113,17 @@ class RHS(ABC):
         # self.i = 2
         # self.j = 39
         self.i1 = 0
-        self.j1 = 36
+        self.j1 = 0
         self.i2 = 1
-        self.j2 = 36
+        self.j2 = 0
         self.atol = 1e-12
         
         self.q = q
         # # print("\nq\n",xp.min(q),"\n",xp.max(q))
-        # print("\nq\n",q[:,self.i1,self.j1,:])
+        # print("\nq\n",q[0,self.i1,self.j1,:])
+        # print("\nq\n",q[1,self.i1,self.j1,:])
+        # print("\nq\n",q[2,self.i1,self.j1,:])
+        # print("\nq\n",q[3,self.i1,self.j1,:])
         # print(f"q [{1},{38}] = q [{2},{38}]: ", xp.all(q[:,self.i1, self.j1,:] == q[:,self.i2, self.j2,:]))
         # print(f"q [{self.i1},{self.j1}] = q [{self.i2},{self.j2}]: ", xp.all(q[:,self.i1, self.j1,:] == q[:,self.i2, self.j2,:]))
         

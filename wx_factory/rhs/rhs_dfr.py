@@ -106,10 +106,10 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         self.dv_dx3 += self.v_avg_x3 @ self.ops.correction_DU
         self.dv_dx3 *= 2.0 / self.geom.Δx3
 
-        print("\nentropy gradientds full")
+        # print("\nentropy gradientds full")
         # print("\ndv_x1 full\n",self.dv_dx1[:,self.i,self.j,:])
-        # print("\ndv_x3 full\n",self.dv_dx3[:,self.i1,self.j1,:])
-        print("\ndv_x3 full close to 0",xp.all(xp.isclose(self.dv_dx3,0)))
+        # # print("\ndv_x3 full\n",self.dv_dx3[:,self.i1,self.j1,:])
+        # print("\ndv_x3 full close to 0",xp.all(xp.isclose(self.dv_dx3,0)))
 
     def volume_integral(self,h):
         xp = self.device.xp
@@ -317,9 +317,8 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         Kdv1_dx1 = xp.einsum('abijk,bijk->aijk', self.K, self.dv_dx1)
         Kdv3_dx3 = xp.einsum('abijk,bijk->aijk', self.K, self.dv_dx3)
 
+        q_avg_x1, q_avg_x3 = self.pde.entropy_average(self.q_itf_x1,self.q_itf_x3)
         q_avg_x1, q_avg_x3 = self.pde.viscous_flux_average(self.q_itf_x1,self.q_itf_x3)
-
-
         dq_dx1 = apply_op(self.q, self.ops.derivative_x)
         # dρE_dρθ_q = dρE_dρθ(self.q)
         # dq_dx1[3,:,:,:] *= dρE_dρθ_q
@@ -334,13 +333,18 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         K1dv1_dx1 = xp.einsum('abijk,bijk->aijk', self.K1, self.dv_dx1)
         K2dv1_dx1 = xp.einsum('abijk,bijk->aijk', self.K2, self.dv_dx1)
         
-        print("Kdv1_dx1",Kdv1_dx1[:,self.i1,self.j1,:])
-        print("dq_dx1",dq_dx1[:,self.i1,self.j1,:])
+        # print("K1",self.K1[:,:,self.i1,self.j1,0])
+        
+        # print("Kdv1_dx1",Kdv1_dx1[:,self.i1,self.j1,:])
+        # print("Kdv1_dx1",Kdv1_dx1[:,self.i1,self.j1,:])
+        # print("dq_dx1",dq_dx1[:,self.i1,self.j1,:])
 
         # Volume terms
         vol_int1 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(Kdv1_dx1 , self.dv_dx1))
         vol_int2 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(Kdv3_dx3 , self.dv_dx3))
 
+        # print("vol_int1",vol_int1)
+        # print("vol_int2",vol_int1)
         denominator = vol_int1 + vol_int2
         return denominator
 
@@ -357,6 +361,9 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
             sigma = self.entropy_residual() # Compute entropy residual
             a = -xp.minimum(0, sigma) # Compute numerator
             b = self.denominator_viscosity_coeff()
+            
+            # print("a",a)
+            # print("b",b)
 
             self.epsilon = self.approx_division(a,b)
         else:
@@ -365,6 +372,8 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
             # shape = (num_equations, self.config.num_elements_vertical, self.config.num_elements_horizontal)
             shape = (self.config.num_elements_vertical, self.config.num_elements_horizontal)
             self.epsilon = xp.full(shape, epsilon_val, dtype=q.dtype)
+            
+        # print("epsilon",self.epsilon)
 
     def viscous_fluxes(self)->None:
         """Computes the viscous flux g_m = \sum_n epsilon K_mn dv_dxn"""
@@ -394,8 +403,8 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         self.K1 = jacobian_complex_field(entropy_to_conservative,self.v,self.geom,self.config)
         self.K2 = jacobian_fd_field(entropy_to_conservative,self.v,self.geom,self.config)
 
-        print("K1[:,i1,j1,0]\n",self.K1[:,:,self.i1,self.j1,0])
-        print("K[:,i1,j1,0]\n",self.K[:,:,self.i1,self.j1,0])
+        # print("K1[:,i1,j1,0]\n",self.K1[:,:,self.i1,self.j1,0])
+        # print("K[:,i1,j1,0]\n",self.K[:,:,self.i1,self.j1,0])
 
     def viscous_flux_divergence_partial(self) -> None:
         """Part of the divergence for g - discontinuous part, no boundary terms"""
