@@ -164,9 +164,9 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         vol_int1 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.f_x1 , self.dv_dx1_volume))
         # vol_int1_diff = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(df1_dx1_volume , self.v))
         vol_int2 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.f_x3 , self.dv_dx3_volume))
-        vol_int2_diff = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(df3_dx3_volume , self.v))
-        vol_int2_diff2 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.df3_dx3 , self.v))
-        vol_int2_diff3 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.f_x3 , self.dv_dx3))
+        # vol_int2_diff = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(df3_dx3_volume , self.v))
+        # vol_int2_diff2 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.df3_dx3 , self.v))
+        # vol_int2_diff3 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.f_x3 , self.dv_dx3))
 
         # print("\n")
         # # print(f"f_x1 [{self.i1},{self.j1}]: ",self.f_x1[:,self.i1, self.j1,:])
@@ -266,12 +266,24 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         # Boundary terms
         # psi_1
         boundary_int1_WE = self.geom.Δx3 / 2.0 * self.boundary_integral(psi1_itf_x1)
-        boundary_int1_DU = self.geom.Δx1 / 2.0 * self.boundary_integral(psi1_itf_x3)
+        # boundary_int1_DU = self.geom.Δx1 / 2.0 * self.boundary_integral(psi1_itf_x3)
         # psi_3
-        boundary_int2_WE = self.geom.Δx3 / 2.0 * self.boundary_integral(psi3_itf_x1)
+        # boundary_int2_WE = self.geom.Δx3 / 2.0 * self.boundary_integral(psi3_itf_x1)
         boundary_int2_DU = self.geom.Δx1 / 2.0 * self.boundary_integral(psi3_itf_x3)
+        
+        # print("\nVolume integrals\n")
+
+        # print("\nvol_int1\n",vol_int1[self.i1,self.j1])
+        # print("vol_int2\n",vol_int2[self.i1,self.j1])
+        # print("boundary_int2_WE\n",boundary_int2_WE[self.i1,self.j1,:])
+        # print("boundary_int2_DU\n",boundary_int2_DU[self.i1,self.j1,:])
+        
+        # print("\nBoundary integrals\n")
 
         # print("\nboundary_int1_WE\n",boundary_int1_WE[self.i1,self.j1,:])
+        # print("boundary_int1_DU\n",boundary_int1_DU[self.i1,self.j1,:])
+        # print("boundary_int2_WE\n",boundary_int2_WE[self.i1,self.j1,:])
+        # print("boundary_int2_DU\n",boundary_int2_DU[self.i1,self.j1,:])
 
         # print("\n")
         # print(f"boundary_int1_WE [{self.i1},{self.j1}]: ",boundary_int1_WE[self.i1, self.j1,:])
@@ -303,12 +315,12 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         # print("- boundary_int1_WE[i1,j1,0] + boundary_int1_WE[i1,j1,1]",- boundary_int1_WE[self.i1,self.j1,0] + boundary_int1_WE[self.i1,self.j1,1])
 
         # Compute entropy residual
-        sigma = ( - vol_int1 - vol_int2
-            - boundary_int1_WE[:,:,0] + boundary_int1_WE[:,:,1] - boundary_int1_DU[:,:,0] + boundary_int1_DU[:,:,1]
-            - boundary_int2_WE[:,:,0] + boundary_int2_WE[:,:,1] -  boundary_int2_DU[:,:,0] + boundary_int2_DU[:,:,1] )
-        # sigma = (- vol_int1 - vol_int2
-        #     - boundary_int1_WE[:,:,0] + boundary_int1_WE[:,:,1]
-        #     -  boundary_int2_DU[:,:,0] + boundary_int2_DU[:,:,1] )
+        # sigma = ( - vol_int1 - vol_int2
+        #     - boundary_int1_WE[:,:,0] + boundary_int1_WE[:,:,1] - boundary_int1_DU[:,:,0] + boundary_int1_DU[:,:,1]
+        #     - boundary_int2_WE[:,:,0] + boundary_int2_WE[:,:,1] -  boundary_int2_DU[:,:,0] + boundary_int2_DU[:,:,1] )
+        sigma = (- vol_int1 - vol_int2
+            - boundary_int1_WE[:,:,0] + boundary_int1_WE[:,:,1]
+            -  boundary_int2_DU[:,:,0] + boundary_int2_DU[:,:,1] )
         return sigma
 
     def denominator_viscosity_coeff(self):
