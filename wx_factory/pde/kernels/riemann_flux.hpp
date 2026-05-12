@@ -29,9 +29,6 @@ DEVICE_SPACE void riemann_eulercartesian_ausm_2d_kernel(
   const num_t wr       = rho_wr * inv_rhor;
 
   // Compute the left and right-hand side pressure states
-  // const num_t pl = p0 * pow(rho_thetal * Rd * inp0, heat_capacity_ratio);
-  // const num_t pr = p0 * pow(rho_thetar * Rd * inp0, heat_capacity_ratio);
-
   const num_t pl = (heat_capacity_ratio-1) * (rho_thetal - 0.5 *(rho_ul * ul + rho_wl*wl) );
   const num_t pr = (heat_capacity_ratio-1) * (rho_thetar - 0.5 *(rho_ur * ur + rho_wr*wr) );
 
