@@ -162,11 +162,11 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         vol_int1 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.f_x1 , self.dv_dx1_volume))
         # vol_int1_diff = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(df1_dx1_volume , self.v))
         vol_int2 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.f_x3 , self.dv_dx3_volume))
-        vol_int2_diff = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(df3_dx3_volume , self.v))
-        vol_int2_diff2 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.df3_dx3 , self.v))
-        vol_int2_diff3 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.f_x3 , self.dv_dx3))
+        # vol_int2_diff = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(df3_dx3_volume , self.v))
+        # vol_int2_diff2 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.df3_dx3 , self.v))
+        # vol_int2_diff3 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(self.f_x3 , self.dv_dx3))
 
-        # print("\n")
+        # # print("\n")
         # # print(f"f_x1 [{self.i1},{self.j1}]: ",self.f_x1[:,self.i1, self.j1,:])
         # # print(f"f_x1[{self.i2},{self.j2}]: ",self.f_x1[:,self.i2, self.j2,:])
         # print(f"f_x1 [{self.i1},{self.j1}] = f_x1 [{self.i2},{self.j2}]: ", xp.all(self.f_x1[:,self.i1, self.j1,:] == self.f_x1[:,self.i2, self.j2,:]))
@@ -264,9 +264,9 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         # Boundary terms
         # psi_1
         boundary_int1_WE = self.geom.Δx3 / 2.0 * self.boundary_integral(psi1_itf_x1)
-        boundary_int1_DU = self.geom.Δx1 / 2.0 * self.boundary_integral(psi1_itf_x3)
+        # boundary_int1_DU = self.geom.Δx1 / 2.0 * self.boundary_integral(psi1_itf_x3)
         # psi_3
-        boundary_int2_WE = self.geom.Δx3 / 2.0 * self.boundary_integral(psi3_itf_x1)
+        # boundary_int2_WE = self.geom.Δx3 / 2.0 * self.boundary_integral(psi3_itf_x1)
         boundary_int2_DU = self.geom.Δx1 / 2.0 * self.boundary_integral(psi3_itf_x3)
 
         # print("\nboundary_int1_WE\n",boundary_int1_WE[self.i1,self.j1,:])
@@ -301,12 +301,12 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         # print("- boundary_int1_WE[i1,j1,0] + boundary_int1_WE[i1,j1,1]",- boundary_int1_WE[self.i1,self.j1,0] + boundary_int1_WE[self.i1,self.j1,1])
 
         # Compute entropy residual
-        sigma = ( - vol_int1 - vol_int2
-            - boundary_int1_WE[:,:,0] + boundary_int1_WE[:,:,1] - boundary_int1_DU[:,:,0] + boundary_int1_DU[:,:,1]
-            - boundary_int2_WE[:,:,0] + boundary_int2_WE[:,:,1] -  boundary_int2_DU[:,:,0] + boundary_int2_DU[:,:,1] )
-        # sigma = (- vol_int1 - vol_int2
-        #     - boundary_int1_WE[:,:,0] + boundary_int1_WE[:,:,1]
-        #     -  boundary_int2_DU[:,:,0] + boundary_int2_DU[:,:,1] )
+        # sigma = ( - vol_int1 - vol_int2
+        #     - boundary_int1_WE[:,:,0] + boundary_int1_WE[:,:,1] - boundary_int1_DU[:,:,0] + boundary_int1_DU[:,:,1]
+        #     - boundary_int2_WE[:,:,0] + boundary_int2_WE[:,:,1] -  boundary_int2_DU[:,:,0] + boundary_int2_DU[:,:,1] )
+        sigma = (- vol_int1 - vol_int2
+            - boundary_int1_WE[:,:,0] + boundary_int1_WE[:,:,1]
+            -  boundary_int2_DU[:,:,0] + boundary_int2_DU[:,:,1] )
         return sigma
 
     def denominator_viscosity_coeff(self):
@@ -331,6 +331,9 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
 
         K1dv1_dx1 = xp.einsum('abijk,bijk->aijk', self.K1, self.dv_dx1)
         K2dv1_dx1 = xp.einsum('abijk,bijk->aijk', self.K2, self.dv_dx1)
+        
+        print("Kdv1_dx1",Kdv1_dx1[:,self.i1,self.j1,:])
+        print("dq_dx1",dq_dx1[:,self.i1,self.j1,:])
 
         # Volume terms
         vol_int1 = self.geom.Δx1 / 2.0 * self.geom.Δx3 / 2.0 * self.volume_integral(self.dot_product(Kdv1_dx1 , self.dv_dx1))
@@ -389,8 +392,8 @@ class RHSDirectFluxReconstruction_ESAV(RHS):
         self.K1 = jacobian_complex_field(entropy_to_conservative,self.v,self.geom,self.config)
         self.K2 = jacobian_fd_field(entropy_to_conservative,self.v,self.geom,self.config)
 
-        # print("K1[:,i1,j1,0]\n",self.K1[:,:,self.i1,self.j1,0])
-        # print("K[:,i1,j1,0]\n",self.K[:,:,self.i1,self.j1,0])
+        print("K1[:,i1,j1,0]\n",self.K1[:,:,self.i1,self.j1,0])
+        print("K[:,i1,j1,0]\n",self.K[:,:,self.i1,self.j1,0])
 
     def viscous_flux_divergence_partial(self) -> None:
         """Part of the divergence for g - discontinuous part, no boundary terms"""
