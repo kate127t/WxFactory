@@ -36,7 +36,7 @@ output_dir.mkdir(parents=True, exist_ok=True)
 
 dt_str = f"{args.dt:.0e}".replace("e-0", "e-").replace("e+0", "e+")
 t_end_str = int(args.t_end) if args.t_end.is_integer() else args.t_end
-esav_str = "esav" if args.esav else "e0"
+# esav_str = "esav" if args.esav else "e0"
 
 output_file = output_dir / (
     f"case_{args.case_number}_"
@@ -45,7 +45,7 @@ output_file = output_dir / (
     f"solpts_{args.num_solpts}_"
     f"nx_{args.num_elements_horizontal}_"
     f"ny_{args.num_elements_vertical}_"
-    f"{esav_str}.ini"
+    f"esav_{args.esav}.ini"
 )
 
 # ----------------------------
