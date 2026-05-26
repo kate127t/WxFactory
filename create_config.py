@@ -21,9 +21,14 @@ parser.add_argument("num_solpts", type=int)
 parser.add_argument("num_elements_horizontal", type=int)
 parser.add_argument("num_elements_vertical", type=int)
 parser.add_argument("output_freq", type=int)
-parser.add_argument("esav", type=bool)
+parser.add_argument("esav", type=str)
 
 args = parser.parse_args()
+
+if args.esav == "False":
+    args.esav = False
+else :
+    args.esav = True
 
 # ----------------------------
 # Paths
