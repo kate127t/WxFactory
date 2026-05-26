@@ -21,6 +21,7 @@ parser.add_argument("num_solpts", type=int)
 parser.add_argument("num_elements_horizontal", type=int)
 parser.add_argument("num_elements_vertical", type=int)
 parser.add_argument("output_freq", type=int)
+parser.add_argument("esav", type=bool)
 
 args = parser.parse_args()
 
@@ -35,6 +36,7 @@ output_dir.mkdir(parents=True, exist_ok=True)
 
 dt_str = f"{args.dt:.0e}".replace("e-0", "e-").replace("e+0", "e+")
 t_end_str = int(args.t_end) if args.t_end.is_integer() else args.t_end
+esav_str = "esav" if args.esav else "e0"
 
 output_file = output_dir / (
     f"case_{args.case_number}_"
@@ -42,7 +44,8 @@ output_file = output_dir / (
     f"tend_{t_end_str}_"
     f"solpts_{args.num_solpts}_"
     f"nx_{args.num_elements_horizontal}_"
-    f"ny_{args.num_elements_vertical}.ini"
+    f"ny_{args.num_elements_vertical}_"
+    f"{esav_str}.ini"
 )
 
 # ----------------------------
@@ -70,6 +73,9 @@ config["Spatial_discretization"]["num_elements_horizontal"] = str(
 )
 config["Spatial_discretization"]["num_elements_vertical"] = str(
     args.num_elements_vertical
+)
+config["Spatial_discretization"]["esav"] = str(
+    args.esav
 )
 
 config["Output_options"]["output_freq"] = str(
