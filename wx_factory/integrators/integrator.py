@@ -97,6 +97,8 @@ class Integrator(ABC):
             solver_info = self.solver_info if self.solver_info is not None else SolverInfo()
 
             rhs_times = None
+            print("no timing")
+            
             # if hasattr(self, "rhs") and isinstance(self.rhs, RHS):
             #     self.rhs.retrieve_last_times()
             #     rhs_times = self.rhs.timings
