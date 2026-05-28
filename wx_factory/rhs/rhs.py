@@ -167,7 +167,7 @@ class RHS(ABC):
 
         # 6. Add forcing terms
         # self.forcing_terms(q)
-        self.timestamps[8] = self.device.timestamp(name="artificial viscosity")
+        # self.timestamps[8] = self.device.timestamp(name="artificial viscosity")
 
         # 7. Add artificial viscosity for entropy stability
         if self.config.esav == True:
