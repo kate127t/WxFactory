@@ -97,9 +97,9 @@ class Integrator(ABC):
             solver_info = self.solver_info if self.solver_info is not None else SolverInfo()
 
             rhs_times = None
-            if hasattr(self, "rhs") and isinstance(self.rhs, RHS):
-                self.rhs.retrieve_last_times()
-                rhs_times = self.rhs.timings
+            # if hasattr(self, "rhs") and isinstance(self.rhs, RHS):
+            #     self.rhs.retrieve_last_times()
+            #     rhs_times = self.rhs.timings
 
             self.output_manager.store_solver_stats(
                 t1 - t0, self.sim_time, dt, solver_info, self.preconditioner, rhs_times
