@@ -148,7 +148,7 @@ class Simulation:
             self.initial_Q.shape,
             self.device,
         )
-
+    
         self.integrator = self._create_time_integrator(self.config.time_integrator)
         self.integrator.output_manager = self.output
         self.integrator.device = self.device
@@ -159,6 +159,8 @@ class Simulation:
         self.t = self.config.dt * self.starting_step
         self.integrator.sim_time = self.t
         self.num_steps = int(numpy.ceil(self.config.t_end / self.config.dt)) - self.starting_step
+        
+        print("plots cuda")
 
     def step(self):
         """Advance the simulation by one time step."""
