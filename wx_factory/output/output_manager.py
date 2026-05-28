@@ -278,11 +278,11 @@ class OutputManager:
             )
         
         # plot and save entropy history over time steps
-        plot_entropy(self.integrated_entropy_history,f"{self.output_dir}/entropy_func_history")
+        # plot_entropy(self.integrated_entropy_history,f"{self.output_dir}/entropy_func_history")
         self.save_list_to_file(self.integrated_entropy_history, self.output_dir,"data_entropy_func_history.npy")
         
         # plot and save L2 error history over time steps
-        plot_entropy(self.L2_error_history,f"{self.output_dir}/L2_error_history")
+        # plot_entropy(self.L2_error_history,f"{self.output_dir}/L2_error_history")
         self.save_list_to_file(self.L2_error_history, self.output_dir,"data_L2_error_history.npy")
         
         # Save the configuration 
