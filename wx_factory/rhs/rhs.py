@@ -127,10 +127,10 @@ class RHS(ABC):
         # print(f"q [{self.i1},{self.j1}] approx q [{self.i2},{self.j2}]: ", xp.allclose(q[:,self.i1, self.j1,:],q[:,self.i2, self.j2,:],rtol=0,atol=self.atol))
 
         # 0.a Process timing
-        if len(self.timestamps) > 0:  # Process timing from previous steps
-            self.retrieve_last_times()
-        else:
-            self.timestamps = [None for _ in range(9)]
+        # if len(self.timestamps) > 0:  # Process timing from previous steps
+        #     self.retrieve_last_times()
+        # else:
+        #     self.timestamps = [None for _ in range(9)]
 
         # 0.b Preserve array shape
         given_shape = q.shape
