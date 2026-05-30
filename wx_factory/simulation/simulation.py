@@ -160,7 +160,7 @@ class Simulation:
         self.integrator.sim_time = self.t
         self.num_steps = int(numpy.ceil(self.config.t_end / self.config.dt)) - self.starting_step
         
-        print("plots cuda")
+        # print("plots cuda")
 
     def step(self):
         """Advance the simulation by one time step."""

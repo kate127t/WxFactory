@@ -15,6 +15,7 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("case_number",type=int)
+parser.add_argument("time_integrator",type=str)
 parser.add_argument("dt", type=float)
 parser.add_argument("t_end", type=float)
 parser.add_argument("num_solpts", type=int)
@@ -45,6 +46,7 @@ t_end_str = int(args.t_end) if args.t_end.is_integer() else args.t_end
 
 output_file = output_dir / (
     f"case_{args.case_number}_"
+    f"_{args.time_integrator}_"
     f"dt_{dt_str}_"
     f"tend_{t_end_str}_"
     f"solpts_{args.num_solpts}_"
@@ -69,6 +71,7 @@ config.read(base_config)
 
 config["Test_case"]["case_number"] = str(args.case_number)
 
+config["Time_integration"]["time_integrator"] = str(args.time_integrator)
 config["Time_integration"]["dt"] = str(args.dt)
 config["Time_integration"]["t_end"] = str(args.t_end)
 
