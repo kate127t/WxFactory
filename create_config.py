@@ -46,7 +46,7 @@ t_end_str = int(args.t_end) if args.t_end.is_integer() else args.t_end
 
 output_file = output_dir / (
     f"case_{args.case_number}_"
-    f"_{args.time_integrator}_"
+    f"{args.time_integrator}_"
     f"dt_{dt_str}_"
     f"tend_{t_end_str}_"
     f"solpts_{args.num_solpts}_"
