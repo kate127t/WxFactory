@@ -67,7 +67,7 @@ class OutputManager:
                 case_name = "2d_entropy_wave"
             elif self.config.case_number == 102:
                 case_name = "riemann"
-            subdir = f"{case_name}_{self.config.time_integrator}_dt{self.config.dt:.0e}_t{self.config.t_end:.0e}_p{self.config.num_solpts}_nh{self.config.num_elements_horizontal}_nv{self.config.num_elements_vertical}" 
+            subdir = f"{case_name}_{self.config.time_integrator}_dt{self.config.dt:.0e}_t{self.config.t_end:.0e}_p{self.config.num_solpts}_nh{self.config.num_elements_horizontal}_nv{self.config.num_elements_vertical}_{self.config.esav}" 
             output_dir = f"{self.config.output_dir}/{subdir}"
             try:
                 os.makedirs(os.path.abspath(output_dir), exist_ok=True)
