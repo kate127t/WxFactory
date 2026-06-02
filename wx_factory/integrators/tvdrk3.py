@@ -10,6 +10,7 @@ class Tvdrk3(Integrator):
         self.rhs = rhs
 
     def __step__(self, Q, dt):
+        print("dt," dt)
         Q1 = Q + self.rhs(Q) * dt
         # Q = Q + self.rhs(Q) * dt
         Q2 = 0.75 * Q + 0.25 * Q1 + 0.25 * self.rhs(Q1) * dt
